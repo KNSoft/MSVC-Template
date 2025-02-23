@@ -100,11 +100,9 @@
         </MASM>
     </ItemDefinitionGroup>
 
-    <!-- Import $(MSBuildProjectName).Build.props if exists -->
-    <PropertyGroup>
-        <ProjectNameBuildPropsPath>$(MSBuildProjectDirectory)\$(MSBuildProjectName).Build.props</ProjectNameBuildPropsPath>
-    </PropertyGroup>
-    <Import Project="$(ProjectNameBuildPropsPath)" Condition="Exists('$(ProjectNameBuildPropsPath)')"/>
+    <!-- Import $(MSBuildProjectName).Build.(props/targets) if exists -->
+    <Import Project="$(MSBuildProjectDirectory)\$(MSBuildProjectName).Build.props" Condition="Exists('$(MSBuildProjectDirectory)\$(MSBuildProjectName).Build.props')"/>
+    <Import Project="$(MSBuildProjectDirectory)\$(MSBuildProjectName).Build.targets" Condition="Exists('$(MSBuildProjectDirectory)\$(MSBuildProjectName).Build.targets')"/>
     
     <!-- Import outer Directory.Build.props if exists -->
     <PropertyGroup>
