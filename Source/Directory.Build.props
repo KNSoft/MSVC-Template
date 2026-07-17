@@ -60,8 +60,11 @@
         </Link>
     </ItemDefinitionGroup>
 
-    <!-- Disable LTCG and ignore default libraries for LIB -->
+    <!-- Disable LTCG and default library directives for static libraries -->
     <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'StaticLibrary'">
+        <ClCompile>
+            <OmitDefaultLibName>true</OmitDefaultLibName>
+        </ClCompile>
         <Lib>
             <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
             <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
