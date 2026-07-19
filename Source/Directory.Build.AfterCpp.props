@@ -1,4 +1,16 @@
 ﻿<Project>
+    <!-- [Project properties] -->
+
+    <ItemGroup>
+        <PropertyPageSchema Include="$(MSBuildThisFileDirectory)KNSoft.xml" />
+    </ItemGroup>
+
+    <!-- Release image metadata -->
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <OmitCoffGroupInfo Condition="'$(OmitCoffGroupInfo)' == ''">true</OmitCoffGroupInfo>
+        <OmitRichHeader Condition="'$(OmitRichHeader)' == ''">true</OmitRichHeader>
+    </PropertyGroup>
+
     <!-- [Overwrite defaults] -->
 
     <!-- Use the latest installed Windows SDK -->
@@ -66,4 +78,23 @@
             <PreprocessorDefinitions>$(KnsoftAsmPredefined);%(PreprocessorDefinitions)</PreprocessorDefinitions>
         </MARMASM>
     </ItemDefinitionGroup>
+
+    <Target Name="KNSoftCustomizeLinkerOptions"
+            AfterTargets="ComputeLinkSwitches"
+            BeforeTargets="Link"
+            Condition="'@(Link)' != '' and '$(Configuration)' == 'Release'">
+        <ItemGroup>
+            <Link Condition="'$(OmitCoffGroupInfo)' == 'true' and
+                             '%(Link.LinkTimeCodeGeneration)' != 'PGInstrument' and
+                             '%(Link.LinkTimeCodeGeneration)' != 'PGOptimization' and
+                             '%(Link.LinkTimeCodeGeneration)' != 'PGUpdate'">
+                <AdditionalOptions>%(Link.AdditionalOptions) /NOCOFFGRPINFO</AdditionalOptions>
+            </Link>
+        </ItemGroup>
+        <ItemGroup>
+            <Link Condition="'$(OmitRichHeader)' == 'true'">
+                <AdditionalOptions>%(Link.AdditionalOptions) /EMITTOOLVERSIONINFO:NO</AdditionalOptions>
+            </Link>
+        </ItemGroup>
+    </Target>
 </Project>
