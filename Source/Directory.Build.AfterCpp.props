@@ -105,6 +105,17 @@
         </ItemGroup>
     </Target>
 
+    <!-- Keep non-preprocessed MARMASM output in IntDir; preprocessed items derive it from their generated source path -->
+    <Target Name="KNSoftCustomizeMARMASMOptions"
+            BeforeTargets="_CreateDirsForMARMASM"
+            Condition="'@(MARMASM)' != ''">
+        <ItemGroup>
+            <MARMASM Update="@(MARMASM)" Condition="'%(MARMASM.PreprocessWithCl)' != 'true' and '%(MARMASM.ObjectFileName)' == '%(MARMASM.RootDir)%(MARMASM.Directory)%(MARMASM.FileName).obj'">
+                <ObjectFileName>$(IntDir)%(MARMASM.RelativeDir)%(MARMASM.FileName).obj</ObjectFileName>
+            </MARMASM>
+        </ItemGroup>
+    </Target>
+
     <Target Name="KNSoftCustomizeLinkerOptions"
             AfterTargets="ComputeLinkSwitches"
             BeforeTargets="Link"
