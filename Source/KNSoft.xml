@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Rule Name="KNSoft"
-      DisplayName="KNSoft"
+<Rule Name="KNSoftMSVC"
+      DisplayName="KNSoft.MSVC"
       PageTemplate="generic"
       Order="9"
       xmlns="http://schemas.microsoft.com/build/2009/properties">
