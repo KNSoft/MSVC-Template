@@ -172,6 +172,19 @@
         </ItemGroup>
     </Target>
 
+    <Target Name="KNSoftCustomizeWholeArchiveOptions"
+            AfterTargets="ComputeLinkSwitches"
+            BeforeTargets="Link"
+            Condition="'@(Link)' != '' and '$(WholeArchiveLibraries)' != '' and
+                       ('$(ConfigurationType)' == 'Application' or '$(ConfigurationType)' == 'DynamicLibrary')">
+        <ItemGroup>
+            <_KnsoftWholeArchiveLibrary Include="$(WholeArchiveLibraries)" />
+            <Link>
+                <AdditionalOptions>%(Link.AdditionalOptions) @(_KnsoftWholeArchiveLibrary->Replace('&quot;', '')->'/WHOLEARCHIVE:&quot;%(Identity)&quot;', ' ')</AdditionalOptions>
+            </Link>
+        </ItemGroup>
+    </Target>
+
     <Target Name="KNSoftCustomizeLinkerOptions"
             AfterTargets="ComputeLinkSwitches"
             BeforeTargets="Link"

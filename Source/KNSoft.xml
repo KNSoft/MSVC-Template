@@ -76,4 +76,10 @@
                 DisplayName="Omit Rich Header"
                 Description="Pass the undocumented /EMITTOOLVERSIONINFO:NO option to omit the Rich Header from a Release image. Ignored when PGO is enabled."
                 Category="Linker" />
+
+  <StringListProperty Name="WholeArchiveLibraries"
+                      DisplayName="Whole Archive Libraries"
+                      Description="Semicolon-separated static library names or paths. Pass /WHOLEARCHIVE:library for each entry when linking an EXE or DLL, including Debug builds. Leave empty to add no /WHOLEARCHIVE switches. Linker optimizations remain active."
+                      Subtype="file"
+                      Category="Linker" />
 </Rule>
